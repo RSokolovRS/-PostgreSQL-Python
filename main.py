@@ -30,7 +30,7 @@ connect = create_connection('CustomersDB', 'postgres', '05121978')
 #             print('Ошибка')
 #         finally:
 #             connect.commit()
-# add_cust = add_customer(connect, 'Roman','Sokolov')
+# add_cust = add_customer(connect, 'Andry','Name')
 
 # Функция удаления данных.
 # def delete_data(connect, name1: str, name2: str)->int:
@@ -52,34 +52,18 @@ def insert_table(connect,  name_1, name_2, phon_num ):
     with connect.cursor() as cur:
         cur.execute("""SELECT customer_id FROM customers c 
                         WHERE customer_id IN (SELECT customer_id FROM customers 
-                        WHERE first_name LIKE %s AND last_name  LIKE %s)
-                        ORDER  BY customer_id;""", (name_1, name_2, ))
+                        WHERE first_name LIKE %s AND last_name  LIKE %s);""",
+                        (name_1, name_2, ))
         res = cur.fetchall()
-        print(res)
-        # cur.execute("""SELECT number FROM phone_numbers;""")
-        # res2 = cur.fetchall()
-        # print(res2)
         for id in res:
-            print(res)
-            for i in id: 
-                for v in i:
-                    print(v)
-            #     with connect.cursor() as cur:
-            #             cur.execute(""" INSERT INTO phone_numbers(number, customer_id)
-            #                             VALUES (%s, %s);""", ( phon_num, i,))
-            #             cur.fetchall()
-                        # connect.commit()
-                # break    
-#         # try:
-#         #     cur.execute("""INSERT INTO Customers(first_name, last_name) VALUES
-#         #     (%s, %s);""", (name_1, name_2,))
-#         #     connect.commit()
-#         #     print('Данные успешно добавлены!')
-#         # except:
-#         #     print('Ошибка')
-#         # finally:
-#         #     connect.commit()
-insert_table(connect, 'Roman','Sokolov', +79208855989)
+            for i in id:
+                with connect.cursor() as cur:
+                    cur.execute(""" INSERT INTO phone_numbers(number, customer_id)
+                                        VALUES (%s, %s);""", ( phon_num, i,))
+                    print('Успешно')
+                    connect.commit()
+
+insert = insert_table(connect, 'Roman','Sokolov', +79208855989)
 
 
    
