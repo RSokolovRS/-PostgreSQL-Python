@@ -30,16 +30,17 @@ connect = create_connection('CustomersDB', 'postgres', '05121978')
 #             print('Ошибка')
 #         finally:
 #             connect.commit()
-# add_cust = add_customer(connect, 'Andry','Name')
+# add_cust = add_customer(connect, 'Andry','Sokolov')
 
-# Функция удаления данных.
+# Функция удаления данных из таблицы.
 # def delete_data(connect, name1: str, name2: str)->int:
 #     with connect.cursor() as cur:
 #         try:
 #             cur.execute("""DELETE FROM customers 
-#                         WHERE customer_id in (select customer_id from customers 
+#                         WHERE customer_id IN (SELECT customer_id FROM customers 
 #                         WHERE first_name  LIKE %s 
 #                         AND last_name LIKE %s );""",(name1, name2))
+#             connect.commit()
 #             print('Данные успешно удалены!')
 #         except:
 #             print('Ошибка')
@@ -55,6 +56,7 @@ connect = create_connection('CustomersDB', 'postgres', '05121978')
 #                         WHERE first_name LIKE %s AND last_name  LIKE %s);""",
 #                         (name_1, name_2, ))
 #         res = cur.fetchall()
+#         print(res)
 #         for id in res:
 #             for i in id:
 #                 with connect.cursor() as cur:
@@ -82,22 +84,42 @@ connect = create_connection('CustomersDB', 'postgres', '05121978')
 # update(connect, sql_query, 'Andry', 'Roman')
 
 # 5. Функция, позволяющая удалить телефон для существующего клиента.
+# def delete(connect, sql_query_delete, f_name, l_name):
+#     twoname = (f_name, l_name)
+#     with connect.cursor() as cur:
+#         try:
+#             cur.execute(sql_query_delete,(twoname))
+#             connect.commit()
+#             print('Номер телефона удален успешно.')
+#         except:
+#             print('Error')
 
-def delete(connect, sql_query_delete, f_name, l_name):
-    twoname = (f_name, l_name)
-    with connect.cursor() as cur:
-        try:
-            cur.execute(sql_query_delete,(twoname))
-            connect.commit()
-            print('Номер телефона удален успешно.')
-        except:
-            print('Error')
+# sql_query_delete = """DELETE FROM phone_numbers pn WHERE pn.customer_id = (
+#                 SELECT c.customer_id FROM customers c WHERE first_name 
+#                 LIKE %s AND last_name LIKE %s);"""
 
-sql_query_delete = """DELETE FROM phone_numbers pn WHERE pn.customer_id = (
-                SELECT c.customer_id FROM customers c WHERE first_name 
-                LIKE %s AND last_name LIKE %s);"""
+# del_phone = delete(connect, sql_query_delete, 'Andry', 'Sokolov')
 
-delete(connect, sql_query_delete, 'Andry', 'Sokolov')
+# 6. Функция, позволяющая удалить существующего клиента.
+# def delete_cust(connect, sql_query_del_cust, fname, lname ):
+#     two_names = fname, lname
+#     with connect.cursor() as cur:
+#         try:
+#             cur.execute(sql_query_del_cust, (two_names))
+#             connect.commit()
+#             print(f'Клиент {two_names} удален!')
+#         except:
+#             print('Error')
+
+
+# sql_query_del_cust = (""" DELETE FROM customers WHERE first_name LIKE %s
+#                         AND last_name LIKE %s;""")
+
+# delete_cust(connect, sql_query_del_cust, 'Andry', 'Sokolov')
+
+
+
+
         
 
 
