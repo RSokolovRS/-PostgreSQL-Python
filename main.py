@@ -63,24 +63,41 @@ connect = create_connection('CustomersDB', 'postgres', '05121978')
 #                     print('Успешно')
 #                     connect.commit()
 
-# insert = insert_table(connect, 'Andry','Name', 79208855989)
+# insert = insert_table(connect, 'Andry','Sokolov', 79208855989)
 
 # 4. Функция, позволяющая изменить данные о клиенте.
-def update(connect, sql_query, old_name1, new_name1):
-    twoname = (old_name1, new_name1)
-    print(type(twoname)) # передовать в sql- запрос %s только кортеж.
-    with connect.cursor() as cur:
-        try:
-            cur.execute(sql_query,(twoname))
-            connect.commit()
-            print(f'Внесены изменения:{old_name1} на {new_name1}')
-        except:
-            print(f'Error')
+# def update(connect, sql_query, old_name1, new_name1):
+#     twoname = (old_name1, new_name1)
+#     print(type(twoname)) # передовать в sql- запрос %s только кортеж.
+#     with connect.cursor() as cur:
+#         try:
+#             cur.execute(sql_query,(twoname))
+#             connect.commit()
+#             print(f'Внесены изменения:{old_name1} на {new_name1}')
+#         except:
+#             print(f'Error')
        
 
-sql_query = ("""UPDATE customers SET first_name =%s WHERE first_name =%s;""")
-update(connect, sql_query, 'Andry', 'Roman')
+# sql_query = ("""UPDATE customers SET first_name =%s WHERE first_name =%s;""")
+# update(connect, sql_query, 'Andry', 'Roman')
 
+# 5. Функция, позволяющая удалить телефон для существующего клиента.
+
+def delete(connect, sql_query_delete, f_name, l_name):
+    twoname = (f_name, l_name)
+    with connect.cursor() as cur:
+        try:
+            cur.execute(sql_query_delete,(twoname))
+            connect.commit()
+            print('Номер телефона удален успешно.')
+        except:
+            print('Error')
+
+sql_query_delete = """DELETE FROM phone_numbers pn WHERE pn.customer_id = (
+                SELECT c.customer_id FROM customers c WHERE first_name 
+                LIKE %s AND last_name LIKE %s);"""
+
+delete(connect, sql_query_delete, 'Andry', 'Sokolov')
         
 
 
