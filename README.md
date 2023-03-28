@@ -28,3 +28,5 @@
 
 # Модель исключений Python. Try, except, else, finally. Модули:
 [Ссылка на статью](https://academy.yandex.ru/handbook/python/article/model-isklyuchenij-python-try-except-else-finally-moduli):
+
+[DELETE-удаление строк таблицы](https://runebook.dev/ru/docs/postgresql/sql-delete)
