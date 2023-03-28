@@ -48,22 +48,25 @@ connect = create_connection('CustomersDB', 'postgres', '05121978')
 # delete_data(connect, 'Roman', 'Sokolov')
 
 # 3. Функция, позволяющая добавить телефон для существующего клиента.
-def insert_table(connect,  name_1, name_2, phon_num ): 
+# def insert_table(connect,  name_1, name_2, phon_num ): 
+#     with connect.cursor() as cur:
+#         cur.execute("""SELECT customer_id FROM customers c 
+#                         WHERE customer_id IN (SELECT customer_id FROM customers 
+#                         WHERE first_name LIKE %s AND last_name  LIKE %s);""",
+#                         (name_1, name_2, ))
+#         res = cur.fetchall()
+#         for id in res:
+#             for i in id:
+#                 with connect.cursor() as cur:
+#                     cur.execute(""" INSERT INTO phone_numbers(number, customer_id)
+#                                         VALUES (%s, %s);""", ( phon_num, i,))
+#                     print('Успешно')
+#                     connect.commit()
+
+# insert = insert_table(connect, 'Roman','Sokolov', +79208855989)
+
+# 4. Функция, позволяющая изменить данные о клиенте.
+def update(connect, )
     with connect.cursor() as cur:
-        cur.execute("""SELECT customer_id FROM customers c 
-                        WHERE customer_id IN (SELECT customer_id FROM customers 
-                        WHERE first_name LIKE %s AND last_name  LIKE %s);""",
-                        (name_1, name_2, ))
-        res = cur.fetchall()
-        for id in res:
-            for i in id:
-                with connect.cursor() as cur:
-                    cur.execute(""" INSERT INTO phone_numbers(number, customer_id)
-                                        VALUES (%s, %s);""", ( phon_num, i,))
-                    print('Успешно')
-                    connect.commit()
-
-insert = insert_table(connect, 'Roman','Sokolov', +79208855989)
-
-
+        cur.execute()
    
