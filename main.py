@@ -30,7 +30,7 @@ connect = create_connection('CustomersDB', 'postgres', '05121978')
 #             print('Ошибка')
 #         finally:
 #             connect.commit()
-# add_cust = add_customer(connect, 'Andry','Sokolov')
+# add_cust = add_customer(connect, 'Roman','Sokolov')
 
 # Функция удаления данных из таблицы.
 # def delete_data(connect, name1: str, name2: str)->int:
@@ -49,23 +49,27 @@ connect = create_connection('CustomersDB', 'postgres', '05121978')
 # delete_data(connect, 'Roman', 'Sokolov')
 
 # 3. Функция, позволяющая добавить телефон для существующего клиента.
-# def insert_table(connect,  name_1, name_2, phon_num ): 
+# def insert_table(connect, sql_like, sql_insert, name_1, name_2, phon_num ):
+#     two_name =  name_1, name_2
 #     with connect.cursor() as cur:
-#         cur.execute("""SELECT customer_id FROM customers c 
-#                         WHERE customer_id IN (SELECT customer_id FROM customers 
-#                         WHERE first_name LIKE %s AND last_name  LIKE %s);""",
-#                         (name_1, name_2, ))
+#         cur.execute(sql_like, (two_name ))
 #         res = cur.fetchall()
 #         print(res)
 #         for id in res:
 #             for i in id:
 #                 with connect.cursor() as cur:
-#                     cur.execute(""" INSERT INTO phone_numbers(number, customer_id)
-#                                         VALUES (%s, %s);""", ( phon_num, i,))
+#                     cur.execute(sql_insert, ( phon_num, i,))
 #                     print('Успешно')
 #                     connect.commit()
 
-# insert = insert_table(connect, 'Andry','Sokolov', 79208855989)
+# sql_like = ("""SELECT customer_id FROM customers c 
+#             WHERE customer_id IN (SELECT customer_id FROM customers 
+#             WHERE first_name LIKE %s AND last_name  LIKE %s);""")
+
+# sql_insert = (""" INSERT INTO phone_numbers(number, customer_id)
+#                 VALUES (%s, %s);""")
+
+# insert = insert_table(connect, sql_like, sql_insert, 'Roman','Sokolov', 79201234567)
 
 # 4. Функция, позволяющая изменить данные о клиенте.
 # def update(connect, sql_query, old_name1, new_name1):
@@ -117,9 +121,30 @@ connect = create_connection('CustomersDB', 'postgres', '05121978')
 
 # delete_cust(connect, sql_query_del_cust, 'Andry', 'Sokolov')
 
+# 7. Функция, позволяющая найти клиента по его данным: имени, фамилии, email или телефону.
+def customer_search(connect,sql_query_1, fname=None, lname=None, phone=None, email=None):
+    with connect.cursor() as cur:
+        cur.execute(sql_query_1)
+        print(cur.fetchone())
 
 
 
+
+"""SELECT first_name, last_name,  pn.number, e.email FROM customers c
+LEFT  JOIN phone_numbers pn ON c.customer_id = pn.customer_id 
+LEFT  JOIN email e ON c.customer_id = e.customer_id
+WHERE first_name LIKE '%' AND  last_name LIKE '%'
+OR   pn.number = 79208855989 OR  e.email LIKE  '%roman-27@mail.ru'
+ORDER BY first_name, last_name;"""
+
+
+
+
+sql_query_1 = ("""SELECT first_name, last_name  FROM customers c
+                WHERE first_name LIKE '%Andry' OR last_name LIKE '%Sokolov';""")
+
+
+res_search = customer_search(connect, sql_query_1)
         
 
 
