@@ -30,3 +30,4 @@
 [Ссылка на статью](https://academy.yandex.ru/handbook/python/article/model-isklyuchenij-python-try-except-else-finally-moduli):
 
 [DELETE-удаление строк таблицы](https://runebook.dev/ru/docs/postgresql/sql-delete)
+[Как управлять подключением к базе данных  диспетчером контекста](https://pythonpip.ru/osnovy/kontekstnyy-menedzher-v-python)
