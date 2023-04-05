@@ -19,51 +19,46 @@ def create_connection(nameDB, userDB, passwordDB):
 connect = create_connection('CustomersDB', 'postgres', '05121978')
 
 # # 1. Функция, создающая структуру БД (таблицы).
-# import psycopg2 
-# def create_table(connect, query):
-#     with connect.cursor() as cur:
-#         try:
-#             cur.execute(query)
-#             print('Таблица создана успешно!')
-#         except:
-#             print('Ошибка')
-#         finally:
-#             connect.commit() # Применить изменения(закомитить).
-#     #connect.close() # Закрыть соединение. 
+def create_table(connect):
+        try:
+            cur.execute("""CREATE TABLE IF NOT EXISTS Customers(
+        customer_id SERIAL PRIMARY KEY,
+        first_name VARCHAR(40) NOT NULL,
+        last_name VARCHAR(100) NOT NULL);
+        CREATE TABLE IF NOT EXISTS Email(
+	    Email_id SERIAL PRIMARY KEY,
+	    Email VARCHAR(120) UNIQUE NOT NULL,
+	    customer_id INTEGER NOT NULL REFERENCES Customers(customer_id) ON DELETE CASCADE);
+        CREATE TABLE IF NOT EXISTS Phone_numbers(
+	    number_id SERIAL PRIMARY KEY,
+	    number BIGINT UNIQUE NOT NULL,
+	    customer_id INTEGER NOT NULL REFERENCES Customers(customer_id) ON DELETE CASCADE);""")
+            print('Таблицы создана успешно!')
+        except:
+            print('Ошибка')
+        finally:
+            connect.commit() # Применить изменения(закомитить).
+    #connect.close() # Закрыть соединение. 
     
-# create_Customers_table = ("""CREATE TABLE IF NOT EXISTS Customers(
-#         customer_id SERIAL PRIMARY KEY,
-#         first_name VARCHAR(40) NOT NULL,
-#         last_name VARCHAR(100) NOT NULL);""")
-
-# create_Email_table = ("""CREATE TABLE IF NOT EXISTS Email(
-# 	    Email_id SERIAL PRIMARY KEY,
-# 	    Email VARCHAR(120) UNIQUE NOT NULL,
-# 	    customer_id INTEGER NOT NULL REFERENCES Customers(customer_id) ON DELETE CASCADE);""")
-
-# create_Phone_numbers_table = ("""CREATE TABLE IF NOT EXISTS Phone_numbers(
-# 	    number_id SERIAL PRIMARY KEY,
-# 	    number BIGINT UNIQUE NOT NULL,
-# 	    customer_id INTEGER NOT NULL REFERENCES Customers(customer_id) ON DELETE CASCADE);""")        
 
 
-# customers_table = create_table(connect, create_Customers_table)
+customers_table = create_table(connect)
 # email_table = create_table(connect, create_Email_table)
 # phone_numbers_table = create_table(connect, create_Phone_numbers_table)
 
 #2. Функция, позволяющая добавить нового клиента.
-def add_customer(connect,  name_1: str, name_2: str)->int: # специальный объект typing.Any, принимает разные значения:
-    with connect.cursor() as cur:
-        try:
-            cur.execute("""INSERT INTO Customers(first_name, last_name) VALUES
-            (%s, %s);""", (name_1, name_2,))
-            connect.commit()
-            print('Данные успешно добавлены!')
-        except:
-            print('Ошибка')
-        finally:
-            connect.commit()
-add_cust = add_customer(connect, 'Andry','Sorokin')
+# def add_customer(connect,  name_1: str, name_2: str)->int: # специальный объект typing.Any, принимает разные значения:
+#     with connect.cursor() as cur:
+#         try:
+#             cur.execute("""INSERT INTO Customers(first_name, last_name) VALUES
+#             (%s, %s);""", (name_1, name_2,))
+#             connect.commit()
+#             print('Данные успешно добавлены!')
+#         except:
+#             print('Ошибка')
+#         finally:
+#             connect.commit()
+# add_cust = add_customer(connect, 'Andry','Sorokin')
 
 # # Функция удаления данных из таблицы.
 # def delete_data(connect, name1: str, name2: str)->int:

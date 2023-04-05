@@ -1,30 +1,28 @@
-import psycopg2 
+import psycopg2
 
-class CustomersDB:
-    def __init__(self, nameDB, userDB, passwordDB, query):
-        self.nameDB = nameDB
-        self.userDB = userDB
-        self.passwordDB = passwordDB
-        self.query = query
+def create_db(conn):
+    pass
 
-    def connect_create(self):
-        connection = None
-        try: 
-            connection = psycopg2.connect(
-                database=self.nameDB, 
-                user=self.userDB,
-                password=self.passwordDB)
-            print(f'Удачное подключение!')
-        except ConnectionError as CE:
-            print(f'Ошибка подключения {CE}')
-        return connection
+def add_client(conn, first_name, last_name, email, phones=None):
+    pass
 
-    def 
+def add_phone(conn, client_id, phone):
+    pass
 
+def change_client(conn, client_id, first_name=None, last_name=None, email=None, phones=None):
+    pass
 
-class 
+def delete_phone(conn, client_id, phone):
+    pass
+
+def delete_client(conn, client_id):
+    pass
+
+def find_client(conn, first_name=None, last_name=None, email=None, phone=None):
+    pass
 
 
+with psycopg2.connect(database="clients_db", user="postgres", password="postgres") as conn:
+    pass  # вызывайте функции здесь
 
-connect = CustomersDB('CustomersDB', 'postgres', '05121978')
-connect.connect_create()
+conn.close()
